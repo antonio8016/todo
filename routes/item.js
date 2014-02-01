@@ -6,18 +6,6 @@ var db = require('../models')
  */
 exports.index = function(req, res){
 
-	var item1 = { 
-		name: "Milk" 
-	};
-
-	var item2 = {
-		name: "Bread"
-	};
-
-	var items = [item1, item2];
-
-  	// res.json(items);
-
 	db.Item
 		.all()
 		.success(function(users) {
@@ -33,11 +21,9 @@ exports.create = function(req, res) {
 
 	var name = req.body.name;
 
-	var item = {
-		name : name
-	};
-
-	res.json(item);
+	db.Item.create({ name: name }).success(function(item) {
+    	res.json(item)
+  	})
 
 };
 
