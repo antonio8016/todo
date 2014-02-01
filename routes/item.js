@@ -1,4 +1,6 @@
 
+var db = require('../models')
+
 /*
  * GET items.
  */
@@ -14,7 +16,13 @@ exports.index = function(req, res){
 
 	var items = [item1, item2];
 
-  	res.json(items);
+  	// res.json(items);
+
+	db.Item
+		.all()
+		.success(function(users) {
+    		res.json(users)
+    	})
 
 };
 
