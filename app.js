@@ -9,6 +9,7 @@ var user = require('./routes/user');
 var item = require('./routes/item');
 var http = require('http');
 var path = require('path');
+var db = require('./models');
 
 var app = express();
 
@@ -44,3 +45,18 @@ app.delete('/items/:id', item.destroy);
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
 });
+
+db
+  .sequelize
+  .sync({ force: true })
+  .complete(function(err) {
+    // if (err) {
+    //   console.log(err)
+    // } else {
+    //   http.createServer(app).listen(app.get('port'), function(){
+    //     console.log('Express server listening on port ' + app.get('port'))
+    //   })
+    // }
+  })
+
+  

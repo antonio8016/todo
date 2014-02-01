@@ -9,6 +9,7 @@
     "express": "3.4.8",
     "jade": "*",
     "sequelize": "~1.7.0-rc3",
-    "mysql": "~2.0.1"
+    "mysql": "~2.0.1",
+    "lodash" : "*"
   }
 }
