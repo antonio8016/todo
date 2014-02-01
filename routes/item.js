@@ -35,13 +35,23 @@ exports.update = function(req, res) {
 	var name = req.body.name;
 	var id = req.params.id;
 
-	var item = {
-		name : name,
-		id: id
-	};
+	// var item = {
+	// 	name : name,
+	// 	id: id
+	// };
 
-	res.json(item);
+	// res.json(item);
 
+	db.Item.find(id).success(function(item) {
+  		if (item) {
+  			item.name = name;
+  			item.save().success(function(){
+  				res.json(item)
+  			})
+  		} else {
+  			res.json({});
+  		}
+	})
 };
 
 /*
