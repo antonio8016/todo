@@ -42,21 +42,18 @@ app.post('/items', item.create);
 app.put('/items/:id', item.update);
 app.delete('/items/:id', item.destroy);
 
-http.createServer(app).listen(app.get('port'), function(){
-  console.log('Express server listening on port ' + app.get('port'));
-});
-
+// Setting up the database
 db
   .sequelize
-  .sync({ force: true })
+  .sync({ force: false })
   .complete(function(err) {
-    // if (err) {
-    //   console.log(err)
-    // } else {
-    //   http.createServer(app).listen(app.get('port'), function(){
-    //     console.log('Express server listening on port ' + app.get('port'))
-    //   })
-    // }
+    if (err) {
+      console.log(err)
+    } else {
+      http.createServer(app).listen(app.get('port'), function(){
+        console.log('Express server listening on port ' + app.get('port'))
+      })
+    }
   })
 
   
