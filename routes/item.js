@@ -6,11 +6,9 @@ var db = require('../models')
  */
 exports.index = function(req, res){
 
-	db.Item
-		.all()
-		.success(function(users) {
-    		res.json(users)
-    	})
+	db.Item.all().success(function(users) {
+    	res.json(users)
+    })
 
 };
 
@@ -35,13 +33,6 @@ exports.update = function(req, res) {
 	var name = req.body.name;
 	var id = req.params.id;
 
-	// var item = {
-	// 	name : name,
-	// 	id: id
-	// };
-
-	// res.json(item);
-
 	db.Item.find(id).success(function(item) {
   		if (item) {
   			item.name = name;
@@ -61,11 +52,15 @@ exports.destroy = function(req, res) {
 
 	var id = req.params.id;
 
-	var item = {
-		id: id
-	};
-
-	res.json(item);
+	db.Item.find(id).success(function(item) {
+  		if (item) {
+  			item.destroy().success(function(){
+  				res.json(item);
+  			})
+  		} else {
+  			res.json({});
+  		}
+	})
 
 }
 
