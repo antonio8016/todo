@@ -10,8 +10,9 @@ var item = require('./routes/item');
 var http = require('http');
 var path = require('path');
 var db = require('./models');
-
+var io;
 var app = express();
+
 
 // all environments
 app.set('port', process.env.PORT || 3000);
@@ -48,11 +49,17 @@ db
   .sync({ force: false })
   .complete(function(err) {
     if (err) {
-      console.log(err)
+      	console.log(err)
     } else {
-      http.createServer(app).listen(app.get('port'), function(){
-        console.log('Express server listening on port ' + app.get('port'))
-      })
+
+      	var server = http.createServer(app)
+      	server.listen(app.get('port'), function() {
+        	console.log('Express server listening on port ' + app.get('port'))
+      	})
+
+      	io = require('socket.io').listen(server)
+
+
     }
   })
 
