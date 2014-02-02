@@ -59,8 +59,19 @@ db
 
       	io = require('socket.io').listen(server)
 
+      	io.sockets.on('connection', function (socket) {
+  			socket.emit('news', { hello: 'world' });
+  			socket.on('my_other_event', function (data) {
+    			console.log(data);
+  			});
+		});
+
+		io.sockets.on('disconnect', function (socket) {
+    		socket.emit('user disconnected');
+  		});
 
     }
-  })
+
+})
 
   
