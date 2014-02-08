@@ -15,5 +15,8 @@
     "passport-http-bearer" : "*",
     "passport" : "*",
     "request" : "*"
+  },
+  "engines" : {
+    "node": "0.10.x"
   }
 }
