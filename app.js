@@ -80,7 +80,7 @@ app.delete('/items/:id', authenticate, item.destroy);
 // Setting up the database
 db
   .sequelize
-  .sync({ force: false })
+  .sync({ force: true })
   .complete(function(err) {
     if (err) {
       	console.log(err)
