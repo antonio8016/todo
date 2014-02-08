@@ -16,19 +16,6 @@ var express = require('express')
   , BearerStrategy = require('passport-http-bearer').Strategy
   , request = require("request");
 
-// Setting up the Authentication
-// passport.use('provider', new OAuth2Strategy({
-//     authorizationURL: 'http://oauth2server.herokuapp.com/oauth2/authorize',
-//     tokenURL: 'http://oauth2server.herokuapp.com/oauth2/token',
-//     clientID: 'e80cc842392d33e5a7731f78d44599a09f3505f30c2f4834cd5760070f1bc7d3',
-//     clientSecret: '0b723f737d14c54f15c2cc553cb2e9f3455419f69d79d3ae738e4477a4c47a73'
-//     callbackURL: 'http://www.google.com'
-//   },
-//   function(accessToken, refreshToken, profile, done) {
-//     done(err, {});
-//   }
-// ));
-
 passport.use(new BearerStrategy(
   function(token, done) {
         
@@ -41,20 +28,15 @@ passport.use(new BearerStrategy(
     };
 
     // Preparing the callback
-    callback = function(error, response, body) {
+    request(options, function(error, response, body) {
       token_info = JSON.parse(body)
       if (token_info.resource_owner_id) {
-        console.log('Whooooop!' + token_info.resource_owner_id)
+        done(null, {"user_id":token_info.resource_owner_id})
       } else {
-        console.log('Noooooo!');
+        done(null, false)
       }
-
-      console.log(body)
-
-      done(null, {"foo":body})
-    }
-
-    request(options, callback);
+      
+    });
 
   }
 
@@ -89,10 +71,11 @@ app.get('/', controllers.index);
 app.get('/users', user.list);
 
 // Items
-app.get('/items', passport.authenticate('bearer', { session: false }), item.index);
-app.post('/items', item.create);
-app.put('/items/:id', item.update);
-app.delete('/items/:id', item.destroy);
+authenticate = passport.authenticate('bearer', { session: false })
+app.get('/items', authenticate, item.index);
+app.post('/items', authenticate, item.create);
+app.put('/items/:id', authenticate, item.update);
+app.delete('/items/:id', authenticate, item.destroy);
 
 // Setting up the database
 db
