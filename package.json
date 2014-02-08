@@ -11,6 +11,9 @@
     "sequelize": "~2.0.0-beta.2",
     "mysql": "~2.0.1",
     "lodash" : "~2.4.1",
-    "socket.io" : "*"
+    "socket.io" : "*",
+    "passport-http-bearer" : "*",
+    "passport" : "*",
+    "request" : "*"
   }
 }

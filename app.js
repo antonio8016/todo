@@ -3,16 +3,62 @@
  * Module dependencies.
  */
 
-var express = require('express');
-var controllers = require('./controllers');
-var user = require('./controllers/user');
-var item = require('./controllers/item');
-var http = require('http');
-var path = require('path');
-var db = require('./models');
-var io;
-var app = express();
+var express = require('express')
+  , controllers = require('./controllers')
+  , user = require('./controllers/user')
+  , item = require('./controllers/item')
+  , http = require('http')
+  , path = require('path')
+  , db = require('./models')
+  , io
+  , app = express()
+  , passport = require('passport')
+  , BearerStrategy = require('passport-http-bearer').Strategy
+  , request = require("request");
 
+// Setting up the Authentication
+// passport.use('provider', new OAuth2Strategy({
+//     authorizationURL: 'http://oauth2server.herokuapp.com/oauth2/authorize',
+//     tokenURL: 'http://oauth2server.herokuapp.com/oauth2/token',
+//     clientID: 'e80cc842392d33e5a7731f78d44599a09f3505f30c2f4834cd5760070f1bc7d3',
+//     clientSecret: '0b723f737d14c54f15c2cc553cb2e9f3455419f69d79d3ae738e4477a4c47a73'
+//     callbackURL: 'http://www.google.com'
+//   },
+//   function(accessToken, refreshToken, profile, done) {
+//     done(err, {});
+//   }
+// ));
+
+passport.use(new BearerStrategy(
+  function(token, done) {
+        
+    // Preparing the URL
+    var options = {
+      url: 'http://oauth2server.herokuapp.com/oauth/token/info',
+      headers: {
+        'Authorization' : 'Bearer ' + token
+      }
+    };
+
+    // Preparing the callback
+    callback = function(error, response, body) {
+      token_info = JSON.parse(body)
+      if (token_info.resource_owner_id) {
+        console.log('Whooooop!' + token_info.resource_owner_id)
+      } else {
+        console.log('Noooooo!');
+      }
+
+      console.log(body)
+
+      done(null, {"foo":body})
+    }
+
+    request(options, callback);
+
+  }
+
+));
 
 // all environments
 app.set('port', process.env.PORT || 3000);
@@ -43,7 +89,7 @@ app.get('/', controllers.index);
 app.get('/users', user.list);
 
 // Items
-app.get('/items', item.index);
+app.get('/items', passport.authenticate('bearer', { session: false }), item.index);
 app.post('/items', item.create);
 app.put('/items/:id', item.update);
 app.delete('/items/:id', item.destroy);
