@@ -1,14 +1,14 @@
 
-var db = require('../models')
+var Item = require('../models/item').Item; 
 
 /*
  * GET items.
  */
 exports.index = function(req, res){
 
-	db.Item.all().success(function(users) {
-    	res.json(users)
-    })
+	Item.find(function(err, users) {
+    res.json(users)
+  })
 
 };
 
@@ -19,9 +19,9 @@ exports.create = function(req, res) {
 
 	var name = req.body.name;
 
-	db.Item.create({ name: name }).success(function(item) {
-    	res.json(item)
-  	})
+	Item.create({ name: name }).success(function(item) {
+    res.json(item)
+  })
 
 };
 
@@ -33,15 +33,15 @@ exports.update = function(req, res) {
 	var name = req.body.name;
 	var id = req.params.id;
 
-	db.Item.find(id).success(function(item) {
-  		if (item) {
-  			item.name = name;
-  			item.save().success(function(){
-  				res.json(item)
-  			})
-  		} else {
-  			res.json({});
-  		}
+	Item.find(id).success(function(item) {
+  	if (item) {
+			item.name = name;
+			item.save().success(function(){
+				res.json(item)
+			})
+		} else {
+			res.json({});
+		}
 	})
 };
 
@@ -52,14 +52,14 @@ exports.destroy = function(req, res) {
 
 	var id = req.params.id;
 
-	db.Item.find(id).success(function(item) {
-  		if (item) {
-  			item.destroy().success(function(){
-  				res.json(item);
-  			})
-  		} else {
-  			res.json({});
-  		}
+	Item.find(id).success(function(item) {
+		if (item) {
+			item.destroy().success(function(){
+				res.json(item);
+			})
+		} else {
+			res.json({});
+		}
 	})
 
 }

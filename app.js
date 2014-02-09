@@ -9,12 +9,12 @@ var express = require('express')
   , item = require('./controllers/item')
   , http = require('http')
   , path = require('path')
-  , db = require('./models')
   , io
   , app = express()
   , passport = require('passport')
   , BearerStrategy = require('passport-http-bearer').Strategy
-  , request = require("request");
+  , request = require("request")
+  , mongoose = require ("mongoose");
 
 passport.use(new BearerStrategy(
   function(token, done) {
@@ -59,6 +59,27 @@ if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
 
+// Setting up MongoDB
+// Here we find an appropriate database to connect to, defaulting to
+// localhost if we don't find one.
+var uristring = process.env.MONGOLAB_URI || 
+                process.env.MONGOHQ_URL ||
+                'mongodb://localhost/TodoItems';
+
+// The http server will listen to an appropriate port, or default to
+// port 5000.
+var theport = process.env.PORT || 5000;
+
+// Makes connection asynchronously.  Mongoose will queue up database
+// operations and release them when the connection is complete.
+mongoose.connect(uristring, function (err, res) {
+  if (err) {
+  console.log ('ERROR connecting to: ' + uristring + '. ' + err);
+  } else {
+  console.log ('Succeeded connected to: ' + uristring);
+  }
+});
+
 // Refactor structure
 // http://stackoverflow.com/questions/5178334/folder-structure-for-a-nodejs-project
 
@@ -77,56 +98,44 @@ app.post('/items', authenticate, item.create);
 app.put('/items/:id', authenticate, item.update);
 app.delete('/items/:id', authenticate, item.destroy);
 
-// Setting up the database
-db
-  .sequelize
-  .sync({ force: true })
-  .complete(function(err) {
-    if (err) {
-      	console.log(err)
-    } else {
+var server = http.createServer(app)
+server.listen(app.get('port'), function() {
+	console.log('Express server listening on port ' + app.get('port'))
+})
 
-      	var server = http.createServer(app)
-      	server.listen(app.get('port'), function() {
-        	console.log('Express server listening on port ' + app.get('port'))
-      	})
+// Refactor sockets
+// http://stackoverflow.com/questions/12500922/nodejs-include-socket-io-in-router-page
+// http://stackoverflow.com/questions/18856190/use-socket-io-inside-a-express-routes-file
+io = require('socket.io').listen(server)
 
-      	// Refactor sockets
-      	// http://stackoverflow.com/questions/12500922/nodejs-include-socket-io-in-router-page
-      	// http://stackoverflow.com/questions/18856190/use-socket-io-inside-a-express-routes-file
-      	io = require('socket.io').listen(server)
+io.sockets.on('connection', function (socket) {
+  
+  socket.emit('news', { hello: 'world' });
 
-      	io.sockets.on('connection', function (socket) {
-  			socket.emit('news', { hello: 'world' });
+  // Item resource
+  socket.on('list_items', function (data) {
+  	// Item.find({}, function(err, users) {
+  	//   socket.emit('list_items', JSON.stringify(users));
+  	// });
+  });
 
-  			// Item resource
-  			socket.on('list_items', function (data) {
-    			db.Item.all().success(function(users) {
-    			   socket.emit('list_items', JSON.stringify(users));
-   	 			});
-  			});
+  socket.on('create_item', function(data) {
+  	// Item.create({ name : data.body.name }).success(function(item) {
+   //    socket.emit('create_item', JSON.stringify(item));
+   //  })
+  });
 
-  			socket.on('create_item', function(data) {
-  				db.Item.create({ name : data.body.name }).success(function(item) {
-              socket.emit('create_item', JSON.stringify(item));
-          })
-  			});
-  			
-        socket.on('edit_item', function(data) {
-  				console.log('edit_item');
-  			});
-      	
-        socket.on('destroy_item', function(data) {
-      			console.log('destroy_item');
-      	});
+  socket.on('edit_item', function(data) {
+  	console.log('edit_item');
+  });
 
-		});
+  socket.on('destroy_item', function(data) {
+  		console.log('destroy_item');
+  });
 
-		io.sockets.on('disconnect', function (socket) {
-    		socket.emit('user disconnected');
-  		});
-
-    }
+	io.sockets.on('disconnect', function (socket) {
+  		socket.emit('user disconnected');
+	});
 
 })
 

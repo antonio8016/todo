@@ -1,10 +1,9 @@
-var Sequelize = require('sequelize')
+var mongoose = require('mongoose')
 
-module.exports = function(sequelize, DataTypes) {
+var itemSchema = new mongoose.Schema({
+	name: String
+})
 
-  	var Item = sequelize.define('Item', {
-  		name: Sequelize.STRING,
-	})
+var Item = mongoose.model('Item', itemSchema)
 
-  	return Item
-}
+exports.Item = Item;
