@@ -88,9 +88,6 @@ mongoose.connect(uristring, function (err, res) {
 // Root route
 app.get('/', controllers.index);
 
-// Users
-app.get('/users', user.list);
-
 // Items
 authenticate = passport.authenticate('bearer', { session: false })
 app.get('/items', authenticate, item.index);

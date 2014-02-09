@@ -6,8 +6,8 @@ var Item = require('../models/item').Item;
  */
 exports.index = function(req, res){
 
-	Item.find(function(err, users) {
-    res.json(users)
+	Item.find(function(err, items) {
+    res.json(items)
   })
 
 };
@@ -18,9 +18,13 @@ exports.index = function(req, res){
 exports.create = function(req, res) {
 
 	var name = req.body.name;
-
-	Item.create({ name: name }).success(function(item) {
-    res.json(item)
+  Item.create({ name: name }, function(err, item) {
+    console.log(name)
+    if (err) {
+      res.json({})
+    } else {
+      res.json(item)
+    }
   })
 
 };
