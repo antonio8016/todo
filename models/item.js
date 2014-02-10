@@ -1,9 +1,9 @@
 var mongoose = require('mongoose')
+var timestamps = require('mongoose-timestamp')
 
 var itemSchema = new mongoose.Schema({
 	name: String
-});
+})
+itemSchema.plugin(timestamps)
 
-var Item = mongoose.model('Item', itemSchema)
-
-exports.Item = Item;
+exports.Item = mongoose.model('Item', itemSchema)
