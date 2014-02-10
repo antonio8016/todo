@@ -29,9 +29,9 @@ exports.setUp = function (app, server) {
 	  		console.log('destroy_item');
 	  });
 
-		io.sockets.on('disconnect', function (socket) {
-	  		socket.emit('user disconnected');
-		});
+	  io.sockets.on('disconnect', function (socket) {
+		socket.emit('user disconnected');
+	  });
 
 	})
 

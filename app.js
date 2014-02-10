@@ -7,9 +7,9 @@ var express = require('express')
   , app = express()
   , http = require('http')
   , path = require('path')
-  , routes = require('./routes')
-  , sockets = require('./sockets')
-  , databases = require('./databases');
+  , routes = require('./config/routes')
+  , sockets = require('./config/sockets')
+  , databases = require('./config/databases');
 
 // all environments
 app.set('port', process.env.PORT || 3000);

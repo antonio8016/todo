@@ -1,5 +1,5 @@
-var controllers = require('./controllers')
-  , item = require('./controllers/item')
+var controllers = require('../controllers')
+  , item = require('../controllers/item')
   , passport = require('passport')
   , BearerStrategy = require('passport-http-bearer').Strategy
   , request = require("request");
