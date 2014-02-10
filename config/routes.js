@@ -32,9 +32,9 @@ exports.setUp = function (app) {
 
 	// Items
 	authenticate = passport.authenticate('bearer', { session: false })
-	app.get('/items', item.index);
-	app.post('/items', item.create);
-	app.put('/items/:id', item.update);
-	app.delete('/items/:id', item.destroy);
+	app.get('/items(.json)?', authenticate, item.index);
+	app.post('/items(.json)?', item.create);
+	app.put('/items/:id(.json)?', item.update);
+	app.delete('/items/:id(.json)?', item.destroy);
 
 }
