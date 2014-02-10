@@ -13,8 +13,7 @@
     "passport": "~0.2.0",
     "request": "~2.33.0",
     "mongoose": "~3.8.6",
-    "mongoose-timestamp": "~0.2.0",
-    "express-semver": "0.0.1"
+    "mongoose-timestamp": "~0.2.0"
   },
   "engines": {
     "node": "0.10.x"
