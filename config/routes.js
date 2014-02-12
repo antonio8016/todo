@@ -1,5 +1,4 @@
-var controllers = require('../controllers')
-  , item = require('../controllers/item')
+var item = require('../controllers/item')
   , passport = require('passport')
   , BearerStrategy = require('passport-http-bearer').Strategy
   , request = require("request");
@@ -7,6 +6,7 @@ var controllers = require('../controllers')
 exports.setUp = function (app) {
 
 	// Setting up the authorization strategy
+	/* istanbul ignore next */
 	passport.use(new BearerStrategy(
 	  function(token, done) {
 	    // Preparing the URL
@@ -29,8 +29,6 @@ exports.setUp = function (app) {
 	    });
 	  }
 	));
-
-	app.get('/', controllers.index);
 
 	// Items
 	authenticate = passport.authenticate('bearer', { session: false })

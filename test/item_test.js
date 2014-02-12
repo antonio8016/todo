@@ -1,6 +1,9 @@
+process.env.NODE_ENV = 'test'
+
 var request = require('request')
   , item_seeds = require('./seeds/item')
   , assert = require("assert")
+  , app = require('../app')
 
 describe('/items resource', function(){
   
@@ -30,7 +33,7 @@ describe('/items resource', function(){
 
   })
 
-  describe('GET /items', function() {
+  describe('GET /items/:id', function() {
     
     it('should find an item', function(done) {
       done()

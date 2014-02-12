@@ -1,5 +1,6 @@
 var socketio = require('socket.io');
 
+/* istanbul ignore next */
 exports.setUp = function (app, server) {
 
   var io = socketio.listen(server);
