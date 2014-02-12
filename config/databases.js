@@ -6,7 +6,9 @@ exports.setUp = function() {
 	// localhost if we don't find one.
 	var uristring = process.env.MONGOLAB_URI || 
 	                process.env.MONGOHQ_URL ||
-	                'mongodb://localhost/TodoItems';
+	                require('./config').db.URL;
+
+	console.log(uristring)
 
 	// The http server will listen to an appropriate port, or default to
 	// port 5000.

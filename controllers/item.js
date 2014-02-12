@@ -5,29 +5,24 @@ var Item = require('../models/item').Item;
  * GET items.
  */
 exports.index = function(req, res){
-
   Item.find(function(err, items) {
   	// socket.emit('list_items', JSON.stringify(items));
 	res.json(items)
   })
-
 };
 
 /*
  *	create item
  */
 exports.create = function(req, res) {
-
 	var name = req.body.name;
-  Item.create({ name: name }, function(err, item) {
-    console.log(name)
+    Item.create({ name: name }, function(err, item) {
     if (err) {
       res.json({})
     } else {
       res.json(item)
     }
   })
-
 };
 
 /*

@@ -20,8 +20,10 @@ exports.setUp = function (app) {
 	    request(options, function(error, response, body) {
 	      token_info = JSON.parse(body)
 	      if (token_info.resource_owner_id) {
+	      	console.log('Authenticated!')
 	        done(null, {"user_id":token_info.resource_owner_id})
 	      } else {
+	      	console.log('Not Authenticated!')
 	        done(null, false)
 	      }
 	    });
@@ -32,7 +34,7 @@ exports.setUp = function (app) {
 
 	// Items
 	authenticate = passport.authenticate('bearer', { session: false })
-	app.get('/items(.json)?', authenticate, item.index);
+	app.get('/items(.json)?', item.index);
 	app.post('/items(.json)?', item.create);
 	app.put('/items/:id(.json)?', item.update);
 	app.delete('/items/:id(.json)?', item.destroy);
