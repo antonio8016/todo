@@ -18,7 +18,8 @@ exports.create = function(req, res) {
 	var name = req.body.name;
     Item.create({ name: name }, function(err, item) {
     if (err) {
-      res.json({})
+      res.statusCode = 409
+      res.json(err)
     } else {
       res.json(item)
     }

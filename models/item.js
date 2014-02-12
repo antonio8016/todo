@@ -1,9 +1,11 @@
 var mongoose = require('mongoose')
-var timestamps = require('mongoose-timestamp')
+  , timestamps = require('mongoose-timestamp')
+  , uniqueValidator = require('mongoose-unique-validator');
 
 var itemSchema = new mongoose.Schema({
-	name: String
+	  name: { type: String, required: true, unique: true }
 })
 itemSchema.plugin(timestamps)
+itemSchema.plugin(uniqueValidator)
 
 exports.Item = mongoose.model('Item', itemSchema)

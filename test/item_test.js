@@ -68,7 +68,21 @@ describe('/items resource', function(){
     })
 
     it('should not add item and return as duplicated', function(done) {
-      done()
+      
+      // Setup request options
+      var options = {
+          url: 'http://localhost:3000/items',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: '{"name" : "Do groceries"}'
+      };
+
+      // Perform the request
+      request.post(options, function (error, response, body) {
+        assert.equal(409, response.statusCode)
+        done()
+      })
     })
 
     it('should not add item and return as invalid body', function(done) {
