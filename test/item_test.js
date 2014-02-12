@@ -1,5 +1,5 @@
 var request = require('request')
-  , item_seeds = require('./seeds/item_seeds')
+  , item_seeds = require('./seeds/item')
   , assert = require("assert")
 
 describe('/items resource', function(){
