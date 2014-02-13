@@ -1,5 +1,4 @@
-test-cov: 
-	istanbul
+test-cov: istanbul
 
 istanbul:
 	istanbul cover _mocha -- -R spec test/spec
