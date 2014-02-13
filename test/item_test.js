@@ -156,6 +156,7 @@ describe('/items resource', function(){
           body: '{"name" : "Do groceries"}'
         }
 
+        // Trying to modify a resource
         request.put(options, function (error, response, body) {
           assert.equal(304, response.statusCode)
           done()
