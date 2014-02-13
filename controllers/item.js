@@ -2,7 +2,7 @@
 var Item = require('../models/item').Item; 
 
 /*
- * GET items.
+ * GET /items
  */
 exports.index = function(req, res){
   Item.find(function(err, items) {
@@ -12,7 +12,21 @@ exports.index = function(req, res){
 };
 
 /*
- *	create item
+ * GET /items/:id
+ */
+exports.show = function(req, res) {
+  Item.findById(req.params.id, /*'name -_id',*/ function(err, item) {
+    if (item) {
+      res.json(item)
+  	} else {
+  	  res.statusCode = 404 // Not found!
+  	  res.json({})
+  	}
+  })
+};
+
+/*
+ *	POST /items
  */
 exports.create = function(req, res) {
 	var name = req.body.name;
@@ -33,15 +47,22 @@ exports.update = function(req, res) {
 
 	var name = req.body.name;
 	var id = req.params.id;
-
-	Item.find(id).success(function(item) {
-  	if (item) {
-			item.name = name;
-			item.save().success(function(){
-				res.json(item)
-			})
-		} else {
-			res.json({});
+	
+	Item.findById(id, function(err, item) {
+		/* istanbul ignore if */
+  		if (err) {
+  			res.statusCode = 400
+  			res.json({})
+  		} else {
+			if (item.name == name) {
+				res.statusCode = 304 // Not modified
+				res.json({})
+			} else {
+				item.name = name
+				item.save(function(err) {
+				    res.json(item)
+			    })
+			}
 		}
 	})
 };
@@ -53,15 +74,19 @@ exports.destroy = function(req, res) {
 
 	var id = req.params.id;
 
-	Item.find(id).success(function(item) {
-		if (item) {
-			item.destroy().success(function(){
-				res.json(item);
-			})
-		} else {
-			res.json({});
-		}
+	Item.findById(id).remove(function(item) {
+		console.log(item)
 	})
+
+	// Item.find(id).success(function(item) {
+	// 	if (item) {
+	// 		item.destroy().success(function(){
+	// 			res.json(item);
+	// 		})
+	// 	} else {
+	// 		res.json({});
+	// 	}
+	// })
 
 }
 

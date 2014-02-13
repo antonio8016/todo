@@ -36,13 +36,29 @@ describe('/items resource', function(){
   describe('GET /items/:id', function() {
     
     it('should find an item', function(done) {
-      done()
+
+      // Get all the items
+      request('http://localhost:3000/items', function (error, response, body) {
+        items = JSON.parse(body)
+        var length = 0;
+        for(var k in items) if(items.hasOwnProperty(k)) length++;
+        assert.equal(length, 3)
+        var item1 = items[0]
+        request('http://localhost:3000/items/' + item1._id, function (error, response, body) {
+          var item2 = JSON.parse(body)
+          assert.equal(item1.name, item2.name)
+          done()
+        });
+      });
     })
 
     it('should not find an item', function(done) {
-      done()
+      
+      request('http://localhost:3000/items/52fc1001364141ce798012d2', function (error, response, body) {
+          assert.equal(404, response.statusCode)
+          done()
+        });
     })
-
   })
 
   describe('POST /items', function() {
@@ -90,5 +106,80 @@ describe('/items resource', function(){
     })
 
   })
+
+  describe('PUT /items/:id', function() {
+    it('should modify the an item', function(done) {
+
+      // Get an item to modify
+      request('http://localhost:3000/items', function (error, response, body) {
+        items = JSON.parse(body)
+        var length = 0;
+        for(var k in items) if(items.hasOwnProperty(k)) length++;
+        assert.equal(length, 3)
+        var item1 = items[0]
+
+        // Assigning a new value
+        var options = {
+          url: 'http://localhost:3000/items/' + item1._id,
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: '{"name" : "Do groceries, NOT!!"}'
+        }
+
+        request.put(options, function (error, response, body) {
+          var item2 = JSON.parse(body)
+          assert.equal(200, response.statusCode)
+          assert.equal(item2.name, item2.name)
+          done()
+        });
+
+      });
+
+    })
+
+    it('should not modify an item because the proposed change actually doesn\'t change anything', function(done) {
+      // Get an item to modify
+      request('http://localhost:3000/items', function (error, response, body) {
+        items = JSON.parse(body)
+        var length = 0;
+        for(var k in items) if(items.hasOwnProperty(k)) length++;
+        assert.equal(length, 3)
+        var item1 = items[0]
+
+        // Assigning a new value
+        var options = {
+          url: 'http://localhost:3000/items/' + item1._id,
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: '{"name" : "Do groceries"}'
+        }
+
+        request.put(options, function (error, response, body) {
+          assert.equal(304, response.statusCode)
+          done()
+        });
+
+      });
+    })  
+
+  })
+
+  // describe('DELETE /items/:id', function() {
+  //   // Get all the items
+  //   request('http://localhost:3000/items', function (error, response, body) {
+
+  //     items = JSON.parse(body)
+  //     var item1 = items[0]
+
+  //     request.delete('http://localhost:3000/items/' + item1._id, function (error, response, body) {
+  //       var item2 = JSON.parse(body)
+  //       assert.equal(item1.name, item2.name)
+  //       done()
+  //     });
+
+  //   });
+  // })
 
 })
