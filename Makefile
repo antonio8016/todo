@@ -1,7 +1,5 @@
-test-cov: istanbul
+report:
+	open coverage/lcov-report/index.html
 
-istanbul:
-	istanbul cover _mocha -- -R spec
- 
-coveralls:
-	cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
+startdb:
+	mongod -dbpath ~/data/db
