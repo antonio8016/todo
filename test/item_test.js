@@ -166,20 +166,45 @@ describe('/items resource', function(){
 
   })
 
-  // describe('DELETE /items/:id', function() {
-  //   // Get all the items
-  //   request('http://localhost:3000/items', function (error, response, body) {
+  describe('DELETE /items/:id', function() {
+    
+    it('should delete an item', function(done) {
 
-  //     items = JSON.parse(body)
-  //     var item1 = items[0]
+      // Get all the items
+      request('http://localhost:3000/items', function (error, response, body) {      
+        
+        var before = JSON.parse(body)
+        var before_count = 0
+        for(var k in before) if(before.hasOwnProperty(k)) before_count++;
+        var item = before[0]
+        
+        request.del('http://localhost:3000/items/' + item._id, function (error, response, body) {  
+          
+          request('http://localhost:3000/items/', function (error, response, body) {
 
-  //     request.delete('http://localhost:3000/items/' + item1._id, function (error, response, body) {
-  //       var item2 = JSON.parse(body)
-  //       assert.equal(item1.name, item2.name)
-  //       done()
-  //     });
+            var after = JSON.parse(body)
+            var after_count = 0
+            for(var k in after) if(after.hasOwnProperty(k)) after_count++;
+            assert.equal(before_count, after_count + 1)
+            done()
 
-  //   });
-  // })
+          })
+
+        });
+
+      })
+
+    })
+
+    it('should not find the item to delete', function(done) {
+
+      request.del('http://localhost:3000/items/52fc1001364141ce798012d2', function(error, response, body) {
+        assert.equal(400, response.statusCode)
+        done()
+      })
+
+    })
+
+  })
 
 })

@@ -1,5 +1,5 @@
 // Set the current environment to true in the env object
-var currentEnv = process.env.NODE_ENV || 'development';
+var currentEnv = process.env.NODE_ENV || /* istanbul ignore next */ 'development';
 exports.appName = "ToDo";
 exports.env = {
   production: false,
@@ -16,6 +16,7 @@ exports.server = {
   // In staging and production, listen loopback. nginx listens on the network.
   ip: '127.0.0.1'
 };  
+/* istanbul ignore next */
 if (currentEnv != 'production' && currentEnv != 'staging') {
   exports.enableTests = true;
   // Listen on all IPs in dev/test (for testing from other machines)

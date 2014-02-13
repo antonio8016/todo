@@ -74,8 +74,13 @@ exports.destroy = function(req, res) {
 
 	var id = req.params.id;
 
-	Item.findById(id).remove(function(item) {
-		console.log(item)
+	Item.remove({_id : id}, function(err, item) {
+		if (err || !item) {
+			res.statusCode = 400
+			res.json({})
+		} else {
+			res.json(item)
+		}
 	})
 
 	// Item.find(id).success(function(item) {
