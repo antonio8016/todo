@@ -4,7 +4,7 @@ node_js:
 services:
 - mongodb
 before_script: npm install -g istanbul && npm install -g mocha
-after_success: cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
+after_script: cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
 # deploy:
 #   api_key:
 #     secure: GrTLK60BCMwLTIrrtM2u9cI+jPPXged0AGu4vOrc0zMezhGVVn9Ik5aDYKsAgANGZG+yZ8md58StEBcd7jIJiZ9AMTtXZtGXKILJHAdq+UvyRV5fyo0WeZwaNz+EtUWGojdi9RZhtNgebd33kpA8IjWBjZ8Ct3jEcX8xnDPXrb8=
