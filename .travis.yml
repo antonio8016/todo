@@ -5,10 +5,11 @@ services:
 - mongodb
 before_script: npm install -g istanbul && npm install -g mocha
 after_script: cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
-# deploy:
-#   api_key:
-#     secure: GrTLK60BCMwLTIrrtM2u9cI+jPPXged0AGu4vOrc0zMezhGVVn9Ik5aDYKsAgANGZG+yZ8md58StEBcd7jIJiZ9AMTtXZtGXKILJHAdq+UvyRV5fyo0WeZwaNz+EtUWGojdi9RZhtNgebd33kpA8IjWBjZ8Ct3jEcX8xnDPXrb8=
-#   app:
-#     secure: UQuEWw8wsIzjA7ZFqWFQgA9ENa+iPs4xfTA9sYGZK2Qpf0e+Ylcb2oLQRVb7GaC5r12gvebQ8I130TApPGjATJX0O8RdKdTx87RJuQpxK6InT4Yd+LMiXTt/ErYzAyCp1GgduarvIkC3omY58/jEazXHkszCUbev/p6P2xvC5Y0=
-#   provider:
-#     secure: i3u6W4VphOJAr+iljEhl/wR2O1Eqc6ZjeA6kSS53g6VlnQFAeZFreO7E3ZwvXCDC/vB+B7G/E7dR7d4cf8yF5Voh7V3GZKYQBdFUr38/01vxOdfKKs5kxvtJr4XKBQ4OvqbJzt1QENXZVtjz64W2lTwK8NLJvpRK3bX55VzV2p0=
+deploy:
+  api_key:
+    secure: GrTLK60BCMwLTIrrtM2u9cI+jPPXged0AGu4vOrc0zMezhGVVn9Ik5aDYKsAgANGZG+yZ8md58StEBcd7jIJiZ9AMTtXZtGXKILJHAdq+UvyRV5fyo0WeZwaNz+EtUWGojdi9RZhtNgebd33kpA8IjWBjZ8Ct3jEcX8xnDPXrb8=
+  app:
+    secure: UQuEWw8wsIzjA7ZFqWFQgA9ENa+iPs4xfTA9sYGZK2Qpf0e+Ylcb2oLQRVb7GaC5r12gvebQ8I130TApPGjATJX0O8RdKdTx87RJuQpxK6InT4Yd+LMiXTt/ErYzAyCp1GgduarvIkC3omY58/jEazXHkszCUbev/p6P2xvC5Y0=
+  provider:
+    secure: i3u6W4VphOJAr+iljEhl/wR2O1Eqc6ZjeA6kSS53g6VlnQFAeZFreO7E3ZwvXCDC/vB+B7G/E7dR7d4cf8yF5Voh7V3GZKYQBdFUr38/01vxOdfKKs5kxvtJr4XKBQ4OvqbJzt1QENXZVtjz64W2lTwK8NLJvpRK3bX55VzV2p0=
+  skip_cleanup: true
