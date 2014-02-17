@@ -33,13 +33,13 @@ if ('development' == app.get('env')) {
 var server = http.createServer(app)
 server.listen(app.get('port'), function() {
 	console.log('Express server listening on port ' + app.get('port'))
-})
+});
 
 // Setting up the databases
-databases.setUp()
+databases.setUp();
 
 // Setting up the routes
-routes.setUp(app)
+routes.setUp(app);
 
 // Setting up the sockets
-sockets.setUp(app, server)
+sockets.setUp(app, server);

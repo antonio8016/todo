@@ -18,20 +18,20 @@ exports.setUp = function (app) {
 	    };
 	    // Preparing the callback
 	    request(options, function(error, response, body) {
-	      token_info = JSON.parse(body)
+	      token_info = JSON.parse(body);
 	      if (token_info.resource_owner_id) {
-	      	console.log('Authenticated!')
-	        done(null, {"user_id":token_info.resource_owner_id})
+	      	console.log('Authenticated!');
+	        done(null, {"user_id":token_info.resource_owner_id});
 	      } else {
-	      	console.log('Not Authenticated!')
-	        done(null, false)
+	      	console.log('Not Authenticated!');
+	        done(null, false);
 	      }
 	    });
 	  }
 	));
 
 	// Items
-	authenticate = passport.authenticate('bearer', { session: false })
+	authenticate = passport.authenticate('bearer', { session: false });
 	app.get('/items', item.index);
 	app.get('/items/:id', item.show);
 	app.post('/items', item.create);

@@ -3,9 +3,9 @@ var mongoose = require('mongoose')
   , uniqueValidator = require('mongoose-unique-validator');
 
 var itemSchema = new mongoose.Schema({
-	  name: { type: String, required: true, unique: true }
-})
-itemSchema.plugin(timestamps)
-itemSchema.plugin(uniqueValidator)
+        name: { type: String, required: true, unique: true }
+});
+itemSchema.plugin(timestamps);
+itemSchema.plugin(uniqueValidator);
 
-exports.Item = mongoose.model('Item', itemSchema)
+exports.Item = mongoose.model('Item', itemSchema);

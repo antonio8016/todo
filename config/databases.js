@@ -1,4 +1,4 @@
-var mongoose = require ("mongoose")
+var mongoose = require ("mongoose");
 
 exports.setUp = function() {
 	// Setting up MongoDB and Mongoose
@@ -8,7 +8,7 @@ exports.setUp = function() {
 	                process.env.MONGOHQ_URL ||
 	                require('./config').db.URL;
 
-	console.log(uristring)
+	console.log(uristring);
 
 	// The http server will listen to an appropriate port, or default to
 	// port 5000.

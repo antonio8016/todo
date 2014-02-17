@@ -8,14 +8,14 @@ exports.setUp = function(done) {
         {name: "Do groceries"},
         {name: "Get some milk"},
         {name: "Don't forget the coffee"}
-    ]
+    ];
     Item.create(items, function(err) {
-        done()
-    })
+        done();
+    });
 }
 
 exports.tearDown = function(done) {
     Item.remove({}, function(err) {
-        done()
-    })
+        done();
+    });
 }
