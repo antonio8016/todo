@@ -1,5 +1,7 @@
 var fs = require('fs');
 
+exports.description = "";
+
 exports.task = function(grunt) {
     return function() {
         grunt.log.writeln('Generating a controller...');

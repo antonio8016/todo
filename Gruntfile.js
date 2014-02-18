@@ -24,6 +24,10 @@ module.exports = function(grunt) {
     grunt.registerTask('test', ['jshint']);
     grunt.registerTask('default', ['jshint']);
 
-    grunt.registerTask('gen-controller', '<<NOTHING>>', generate_controller.task(grunt));
-    grunt.registerTask('gen-model', '<<NOTHING>>', generate_model.task(grunt));
+    grunt.registerTask('gen-controller', generate_controller.description, generate_controller.task(grunt));
+    grunt.registerTask('gen-model', generate_model.description, generate_model.task(grunt));
+    grunt.registerTask('gen', function(type, name) {
+        var properties = grunt.option('properties');
+    });
+
 };
