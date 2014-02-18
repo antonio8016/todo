@@ -21,7 +21,7 @@ if (currentEnv != 'production' && currentEnv != 'staging') {
   exports.enableTests = true;
   // Listen on all IPs in dev/test (for testing from other machines)
   exports.server.ip = '0.0.0.0';
-};
+}
 exports.db = {
   URL: "mongodb://localhost:27017/" + exports.appName.toLowerCase() + "_" + currentEnv
 };

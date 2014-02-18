@@ -8,7 +8,7 @@ exports.index = function(req, res){
     Item.find(function(err, items) {
         // socket.emit('list_items', JSON.stringify(items));
         res.json(items);
-    })
+    });
 };
 
 /*
@@ -18,7 +18,7 @@ exports.show = function(req, res) {
     Item.findById(req.params.id, /*'name -_id',*/ function(err, item) {
         if (item) {
             res.json(item);
-  	    } else {
+        } else {
             res.statusCode = 404; // Not found!
             res.json({});
         }
@@ -29,15 +29,15 @@ exports.show = function(req, res) {
  *	POST /items
  */
 exports.create = function(req, res) {
-    var name = req.body.name;
-    Item.create({ name: name }, function(err, item) {
+    var args = { name: req.body.name };
+    Item.create(args, function(err, item) {
         if (err) {
             res.statusCode = 409;
             res.json(err);
         } else {
             res.json(item);
         }
-    })
+    });
 };
 
 /*
@@ -58,14 +58,14 @@ exports.update = function(req, res) {
                 res.statusCode = 304; // Not modified
                 res.json({});
             } else {
-                item.name = name
+                item.name = name;
                 item.save(function(err) {
                     res.json(item);
                 });
             }
         }
     });
-}
+};
 
 /*
  *	Delete item
@@ -83,16 +83,6 @@ exports.destroy = function(req, res) {
         }
     });
 
-    // Item.find(id).success(function(item) {
-    // 	if (item) {
-    // 		item.destroy().success(function(){
-    // 			res.json(item);
-    // 		})
-    // 	} else {
-    // 		res.json({});
-    // 	}
-    // })
-
-}
+};
 
 

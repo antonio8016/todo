@@ -1,18 +1,18 @@
 process.env.NODE_ENV = 'test';
 
-var request = require('request')
-  , item_seeds = require('./seeds/item')
-  , assert = require("assert")
-  , app = require('../app')
+var request = require('request'),
+    item_seeds = require('./seeds/item'),
+    assert = require("assert"),
+    app = require('../app');
 
 describe('/items resource', function() {
   
     beforeEach(function(done){
-        item_seeds.setUp(done)
+        item_seeds.setUp(done);
     });
 
     afterEach(function(done) {
-        item_seeds.tearDown(done)
+        item_seeds.tearDown(done);
     });
   
     describe('GET /items', function() {
@@ -141,7 +141,7 @@ describe('/items resource', function() {
         it('should not modify an item because the proposed change actually doesn\'t change anything', function(done) {
              // Get an item to modify
             request('http://localhost:3000/items', function (error, response, body) {
-                items = JSON.parse(body)
+                items = JSON.parse(body);
                 var length = 0;
                 for(var k in items) if(items.hasOwnProperty(k)) length++;
                 assert.equal(length, 3);
@@ -200,7 +200,7 @@ describe('/items resource', function() {
         it('should not modify an item because the proposed change actually doesn\'t change anything', function(done) {
              // Get an item to modify
             request('http://localhost:3000/items', function (error, response, body) {
-                items = JSON.parse(body)
+                items = JSON.parse(body);
                 var length = 0;
                 for(var k in items) if(items.hasOwnProperty(k)) length++;
                 assert.equal(length, 3);
@@ -265,4 +265,4 @@ describe('/items resource', function() {
 
     });
 
-})
+});

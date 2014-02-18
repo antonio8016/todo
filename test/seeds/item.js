@@ -1,7 +1,7 @@
 
-var mongoose = require ("mongoose")
-  , uristring = require('../../config/config').db.URL
-  , Item = require('../../models/item').Item
+var mongoose = require ("mongoose"),
+    uristring = require('../../config/config').db.URL,
+    Item = require('../../models/item').Item;
 
 exports.setUp = function(done) {
     items = [
@@ -12,10 +12,10 @@ exports.setUp = function(done) {
     Item.create(items, function(err) {
         done();
     });
-}
+};
 
 exports.tearDown = function(done) {
     Item.remove({}, function(err) {
         done();
     });
-}
+};

@@ -1,5 +1,5 @@
-var socketio = require('socket.io')
-  , logger = ('../lib/logger');
+var socketio = require('socket.io'),
+    logger = ('../lib/logger');
 
 /* istanbul ignore next */
 exports.setUp = function (app, server) {
@@ -7,8 +7,6 @@ exports.setUp = function (app, server) {
     var io = socketio.listen(server);
 
     io.sockets.on('connection', function (socket) {
-	  
-        socket.emit('news', { hello: 'world' });
 
         // Item resource
         socket.on('list_items', function (data) {
@@ -29,13 +27,13 @@ exports.setUp = function (app, server) {
         });
 
         socket.on('destroy_item', function(data) {
-	  	    console.log('destroy_item');
+            console.log('destroy_item');
         });
 
         io.sockets.on('disconnect', function (socket) {
             socket.emit('user disconnected');
         });
 
-    })
+    });
 
 };
