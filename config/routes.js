@@ -35,7 +35,7 @@ exports.setUp = function (app) {
     // if ('test' == app.get('env') /* staging? */ ) {
            app.head('/seeds', seed.info);
            app.post('/seeds', seed.create);
-           app.delete('/seeds', seed.destroy);
+           app.delete('/seeds/:id', seed.destroy);
     //    }
 
 	// Items

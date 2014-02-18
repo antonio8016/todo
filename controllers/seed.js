@@ -6,7 +6,7 @@ var item_seeds = require('../test/seeds/item');
  */
 exports.info = function(req, res) {
     res.statusCode = 200;
-    res.write("");
+    res.write();
     res.end();
 };
 
@@ -15,14 +15,14 @@ exports.info = function(req, res) {
  */
 exports.create = function(req, res) {
     res.statusCode = 200;
-    res.write("");
     item_seeds.setUp(function() {
+        res.write('{"id" : 12345 }');
         res.end();
     });
 };
 
 /*
- * DELETE /seeds
+ * DELETE /seeds/:id
  */
 exports.destroy = function(req, res) {
     res.statusCode = 200;
