@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/antonio8016/todo.png?label=ready)](https://waffle.io/antonio8016/todo)
 todo
 ====
 
