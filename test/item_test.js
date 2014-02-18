@@ -165,6 +165,65 @@ describe('/items resource', function() {
         });  
     });
 
+    describe('PATCH /items/:id', function() {
+
+        it('should modify the an item', function(done) {
+
+            // Get an item to modify
+            request('http://localhost:3000/items', function (error, response, body) {
+                items = JSON.parse(body);
+                var length = 0;
+                for(var k in items) if(items.hasOwnProperty(k)) length++;
+                assert.equal(length, 3);
+                var item1 = items[0];
+
+                // Assigning a new value
+                var options = {
+                    url: 'http://localhost:3000/items/' + item1.id,
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: '{"name" : "Do groceries, NOT!!"}'
+                };
+
+                request.patch(options, function (error, response, body) {
+                    var item2 = JSON.parse(body);
+                    assert.equal(200, response.statusCode);
+                    assert.equal(item2.name, item2.name);
+                    done();
+                });
+
+            });
+
+        });
+
+        it('should not modify an item because the proposed change actually doesn\'t change anything', function(done) {
+             // Get an item to modify
+            request('http://localhost:3000/items', function (error, response, body) {
+                items = JSON.parse(body)
+                var length = 0;
+                for(var k in items) if(items.hasOwnProperty(k)) length++;
+                assert.equal(length, 3);
+                var item1 = items[0];
+
+                // Assigning a new value
+                var options = {
+                    url: 'http://localhost:3000/items/' + item1.id,
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: '{"name" : "Do groceries"}'
+                };
+
+                // Trying to modify a resource
+                request.patch(options, function (error, response, body) {
+                    assert.equal(304, response.statusCode);
+                    done();
+                });
+            });
+        });  
+    });
+
     describe('DELETE /items/:id', function() {
     
         it('should delete an item', function(done) {
