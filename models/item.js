@@ -1,9 +1,19 @@
 var mongoose = require('mongoose')
   , timestamps = require('mongoose-timestamp')
-  , uniqueValidator = require('mongoose-unique-validator');
+  , uniqueValidator = require('mongoose-unique-validator')
+  , ShortId = require('mongoose-shortid');;
 
 var itemSchema = new mongoose.Schema({
-    name: { type: String, required: true, unique: true }
+    _id: {
+        type: ShortId,
+        len: 14,
+        alphabet: '0123456789'
+    },
+    name: { 
+        type: String, 
+        required: true, 
+        unique: true 
+    }
 });
 
 itemSchema.set('toJSON', {
