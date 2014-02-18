@@ -44,7 +44,7 @@ describe('/items resource', function() {
                 for(var k in items) if(items.hasOwnProperty(k)) length++;
                 assert.equal(length, 3);
                 var item1 = items[0];
-                request('http://localhost:3000/items/' + item1._id, function (error, response, body) {
+                request('http://localhost:3000/items/' + item1.id, function (error, response, body) {
                     var item2 = JSON.parse(body);
                     assert.equal(item1.name, item2.name);
                     done();
@@ -120,7 +120,7 @@ describe('/items resource', function() {
 
                 // Assigning a new value
                 var options = {
-                    url: 'http://localhost:3000/items/' + item1._id,
+                    url: 'http://localhost:3000/items/' + item1.id,
                     headers: {
                         'Content-Type': 'application/json'
                     },
@@ -149,7 +149,7 @@ describe('/items resource', function() {
 
                 // Assigning a new value
                 var options = {
-                    url: 'http://localhost:3000/items/' + item1._id,
+                    url: 'http://localhost:3000/items/' + item1.id,
                     headers: {
                         'Content-Type': 'application/json'
                     },
@@ -177,7 +177,7 @@ describe('/items resource', function() {
                 for(var k in before) if(before.hasOwnProperty(k)) before_count++;
                 var item = before[0];
         
-                request.del('http://localhost:3000/items/' + item._id, function (error, response, body) {  
+                request.del('http://localhost:3000/items/' + item.id, function (error, response, body) {  
           
                     request('http://localhost:3000/items/', function (error, response, body) {
 
