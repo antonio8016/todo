@@ -30,12 +30,19 @@ exports.setUp = function (app) {
 	  }
 	));
 
+	// TODO: Seeding routes
+	// if ('test' == app.get('env') /* staging? */ ) {
+    //        app.delete('/seeds')
+    //        app.post('/seeds')
+    //    }
+
 	// Items
 	authenticate = passport.authenticate('bearer', { session: false });
 	app.get('/items', item.index);
 	app.get('/items/:id', item.show);
 	app.post('/items', item.create);
 	app.put('/items/:id', item.update);
+	app.patch('/items/:id', item.update);
 	app.delete('/items/:id', item.destroy);
 
 }
