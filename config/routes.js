@@ -1,4 +1,5 @@
 var item = require('../controllers/item'),
+    seed = require('../controllers/seed'),
     passport = require('passport'),
     BearerStrategy = require('passport-http-bearer').Strategy,
     request = require("request");
@@ -32,9 +33,9 @@ exports.setUp = function (app) {
 
     // TODO: Seeding routes
     // if ('test' == app.get('env') /* staging? */ ) {
-    //        app.head('/seeds')
-    //        app.delete('/seeds')
-    //        app.post('/seeds')
+           app.head('/seeds', seed.info);
+           app.post('/seeds', seed.create);
+           app.delete('/seeds', seed.destroy);
     //    }
 
 	// Items

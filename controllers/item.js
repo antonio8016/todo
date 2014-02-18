@@ -4,7 +4,7 @@ var Item = require('../models/item').Item;
 /*
  * GET /items
  */
-exports.index = function(req, res){
+exports.index = function(req, res) {
     Item.find(function(err, items) {
         // socket.emit('list_items', JSON.stringify(items));
         res.json(items);
