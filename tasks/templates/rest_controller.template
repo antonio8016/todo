@@ -1,39 +1,39 @@
 
-var Item = require('../models/item').Item,
+var {{Model}} = require('../path/to/model').{{Model}},
     HttpStatusCodes = require('../lib/http_status_codes'); 
 
 /*
- * GET /items
+ * GET /models
  */
 exports.index = function(req, res) {
-    Item.find(function(err, items) {
-        // socket.emit('list_items', JSON.stringify(items));
+    {{Model}}.find(function(err, items) {
         res.statusCode = HttpStatusCodes.OK;
         res.json(items);
     });
 };
 
 /*
- * GET /items/:id
+ * GET /models/:id
  */
 exports.show = function(req, res) {
-    Item.findById(req.params.id, /*'name -_id',*/ function(err, item) {
+    {{Model}}.findById(req.params.id, function(err, item) {
         if (item) {
             res.statusCode = HttpStatusCodes.OK;
             res.json(item);
         } else {
-            res.statusCode = HttpStatusCodes.NOT_FOUND; // Not found!
-            res.json({});
+            res.statusCode = HttpStatusCodes.NOT_FOUND;
+            res.write();
+            res.end();
         }
     });
 };
 
 /*
- *	POST /items
+ *  POST /models
  */
 exports.create = function(req, res) {
     var args = { name: req.body.name };
-    Item.create(args, function(err, item) {
+    {{Model}}.create(args, function(err, item) {
         if (err) {
             res.statusCode = HttpStatusCodes.CONFLICT;
             res.json(err);
@@ -44,22 +44,24 @@ exports.create = function(req, res) {
 };
 
 /*
- *	edit item
+ *  PUT/PATCH /models/:id
  */
 exports.update = function(req, res) {
 
     var name = req.body.name;
     var id = req.params.id;
-	
-    Item.findById(id, function(err, item) {
+    
+    {{Model}}.findById(id, function(err, item) {
         /* istanbul ignore if */
         if (err) {
-            res.statusCode = 400;
-            res.json({});
+            res.statusCode = HttpStatusCodes.NOT_FOUND;
+            res.write();
+            res.end();
         } else {
             if (item.name == name) {
-                res.statusCode = 304; // Not modified
-                res.json({});
+                res.statusCode = HttpStatusCodes.NOT_MODIFIED; // Not modified
+                res.write();
+                res.end();
             } else {
                 item.name = name;
                 item.save(function(err) {
@@ -71,17 +73,18 @@ exports.update = function(req, res) {
 };
 
 /*
- *	Delete item
+ *  DELETE /models/:id
  */
 exports.destroy = function(req, res) {
 
     var id = req.params.id;
 
-    Item.remove({_id : id}, function(err, item) {
+    {{Model}}.remove({_id : id}, function(err, item) {
         if (err || !item) {
-            res.statusCode = 400;
-            res.json({});
-		} else {
+            res.statusCode = HttpStatusCodes.NOT_FOUND;
+            res.write();
+            res.end();
+        } else {
             res.json(item);
         }
     });

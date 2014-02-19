@@ -1,0 +1,20 @@
+var mongoose = require('mongoose')
+  , timestamps = require('mongoose-timestamp')
+  , uniqueValidator = require('mongoose-unique-validator');
+
+var schema = new mongoose.Schema({
+    name: { type: String /*, required: true, unique: true*/ }
+});
+
+schema.set('toJSON', {
+    transform: function (doc, ret, options) {
+        ret.id = ret._id;
+        delete ret._id;
+        delete ret.__v;
+    }
+}); 
+
+schema.plugin(timestamps);
+schema.plugin(uniqueValidator);
+
+exports.{{model}} = mongoose.model('{{model}}', itemSchema);

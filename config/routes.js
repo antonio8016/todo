@@ -39,6 +39,9 @@ exports.setUp = function (app) {
     //    }
 
 	// Items
+    if ('development' == app.get('env')) {
+        // Set authentication
+    }
     authenticate = passport.authenticate('bearer', { session: false });
     app.get('/items', item.index);
     app.get('/items/:id', item.show);
