@@ -43,11 +43,11 @@ exports.setUp = function (app) {
         // Set authentication
     }
     authenticate = passport.authenticate('bearer', { session: false });
-    app.get('/items', item.index);
-    app.get('/items/:id', item.show);
-    app.post('/items', item.create);
-    app.put('/items/:id', item.update);
-    app.patch('/items/:id', item.update);
-    app.delete('/items/:id', item.destroy);
+    app.get('/items', /* authenticate, */ item.index);
+    app.get('/items/:id', /* authenticate, */ item.show);
+    app.post('/items', /* authenticate, */ item.create);
+    app.put('/items/:id', /* authenticate, */ item.update);
+    app.patch('/items/:id', /* authenticate, */ item.update);
+    app.delete('/items/:id', /* authenticate, */ item.destroy);
 
 };
