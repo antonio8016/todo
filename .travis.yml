@@ -3,7 +3,7 @@ node_js:
 - '0.11'
 services:
 - mongodb
-before_script: npm install -g istanbul && npm install -g mocha
+before_script: npm install -g istanbul && npm install -g mocha && npm install -g grunt-cli
 after_success: cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
 deploy:
   api_key:
