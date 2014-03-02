@@ -2,10 +2,12 @@
 var Item = require('../models/item').Item,
     HttpStatusCodes = require('../lib/http_status_codes'); 
 
+function ItemsController () {}
+
 /*
  * GET /items
  */
-exports.index = function(req, res) {
+ItemsController.index = function(req, res) {
     Item.find(function(err, items) {
         // socket.emit('list_items', JSON.stringify(items));
         res.statusCode = HttpStatusCodes.OK;
@@ -16,7 +18,7 @@ exports.index = function(req, res) {
 /*
  * GET /items/:id
  */
-exports.show = function(req, res) {
+ItemsController.show = function(req, res) {
     Item.findById(req.params.id, /*'name -_id',*/ function(err, item) {
         if (item) {
             res.statusCode = HttpStatusCodes.OK;
@@ -31,7 +33,7 @@ exports.show = function(req, res) {
 /*
  *	POST /items
  */
-exports.create = function(req, res) {
+ItemsController.create = function(req, res) {
     var args = { name: req.body.name };
     Item.create(args, function(err, item) {
         if (err) {
@@ -46,7 +48,7 @@ exports.create = function(req, res) {
 /*
  *	edit item
  */
-exports.update = function(req, res) {
+ItemsController.update = function(req, res) {
 
     var name = req.body.name;
     var id = req.params.id;
@@ -73,7 +75,7 @@ exports.update = function(req, res) {
 /*
  *	Delete item
  */
-exports.destroy = function(req, res) {
+ItemsController.destroy = function(req, res) {
 
     var id = req.params.id;
 
@@ -88,4 +90,4 @@ exports.destroy = function(req, res) {
 
 };
 
-
+module.exports = ItemsController;

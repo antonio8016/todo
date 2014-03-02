@@ -43,3 +43,8 @@ routes.setUp(app);
 
 // Setting up the sockets
 sockets.setUp(app, server);
+
+// If test
+// Exporting the app and embedding the server too
+app.server = server;
+module.exports = app;

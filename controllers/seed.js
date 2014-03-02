@@ -1,10 +1,12 @@
 
 var item_seeds = require('../test/seeds/item');
 
+function SeedsController () {}
+
 /*
  * HEAD /seeds
  */
-exports.info = function(req, res) {
+SeedsController.info = function(req, res) {
     res.statusCode = 200;
     res.write();
     res.end();
@@ -13,7 +15,7 @@ exports.info = function(req, res) {
 /*
  * POST /seeds
  */
-exports.create = function(req, res) {
+SeedsController.create = function(req, res) {
     res.statusCode = 200;
     item_seeds.setUp(function() {
         res.write('{"id" : 12345 }');
@@ -24,10 +26,12 @@ exports.create = function(req, res) {
 /*
  * DELETE /seeds/:id
  */
-exports.destroy = function(req, res) {
+SeedsController.destroy = function(req, res) {
     res.statusCode = 200;
     res.write("");
     item_seeds.tearDown(function() {
         res.end();
     });
 };
+
+module.exports = SeedsController;

@@ -1,10 +1,12 @@
 var mongoose = require ("mongoose");
 
-exports.setUp = function() {
-	// Setting up MongoDB and Mongoose
-	// Here we find an appropriate database to connect to, defaulting to
-	// localhost if we don't find one.
-	var uristring = process.env.MONGOLAB_URI || 
+function Databases() {}
+
+Databases.setUp = function() {
+    // Setting up MongoDB and Mongoose
+    // Here we find an appropriate database to connect to, defaulting to
+    // localhost if we don't find one.
+    var uristring = process.env.MONGOLAB_URI || 
                     process.env.MONGOHQ_URL ||
                     require('./config').db.URL;
 
@@ -25,3 +27,5 @@ exports.setUp = function() {
         }
     });
 };
+
+module.exports = Databases;

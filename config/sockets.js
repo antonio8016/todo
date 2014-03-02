@@ -1,8 +1,9 @@
 var socketio = require('socket.io'),
     logger = ('../lib/logger');
 
-/* istanbul ignore next */
-exports.setUp = function (app, server) {
+function Sockets () {}
+
+Sockets.setUp = function (app, server) {
 
     var io = socketio.listen(server);
 
@@ -37,3 +38,6 @@ exports.setUp = function (app, server) {
     });
 
 };
+
+/* istanbul ignore next */
+module.exports = Sockets;

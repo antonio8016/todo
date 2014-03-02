@@ -4,8 +4,9 @@ var item = require('../controllers/item'),
     BearerStrategy = require('passport-http-bearer').Strategy,
     request = require("request");
 
-exports.setUp = function (app) {
+function Routes () {}
 
+Routes.setUp = function (app) {
     // Setting up the authorization strategy
     /* istanbul ignore next */
     passport.use(new BearerStrategy(
@@ -38,16 +39,24 @@ exports.setUp = function (app) {
            app.delete('/seeds/:id', seed.destroy);
     //    }
 
-	// Items
+    // Items
     if ('development' == app.get('env')) {
         // Set authentication
     }
     authenticate = passport.authenticate('bearer', { session: false });
+
+    //
+    // app.get({path: '/items', version: 1}, item.index)
+    //
+    // https://github.com/visionmedia/express-resource
+    // Magic for adding express methods --> https://github.com/visionmedia/express-resource/blob/master/index.js
+    //
     app.get('/items', /* authenticate, */ item.index);
     app.get('/items/:id', /* authenticate, */ item.show);
     app.post('/items', /* authenticate, */ item.create);
-    app.put('/items/:id', /* authenticate, */ item.update);
+    app.put('/items/:id',  /*authenticate,*/  item.update);
     app.patch('/items/:id', /* authenticate, */ item.update);
     app.delete('/items/:id', /* authenticate, */ item.destroy);
-
 };
+
+module.exports = Routes;
