@@ -51,12 +51,9 @@ Routes.setUp = function (app) {
     // https://github.com/visionmedia/express-resource
     // Magic for adding express methods --> https://github.com/visionmedia/express-resource/blob/master/index.js
     //
-    app.get('/items', /* authenticate, */ item.index);
-    app.get('/items/:id', /* authenticate, */ item.show);
-    app.post('/items', /* authenticate, */ item.create);
-    app.put('/items/:id',  /*authenticate,*/  item.update);
-    app.patch('/items/:id', /* authenticate, */ item.update);
-    app.delete('/items/:id', /* authenticate, */ item.destroy);
+    // app.all('/items*', authenticate);
+    app.resource('items', item);
+    app.patch('/items/:id', /* authenticate, */ item.update); // Rails 4 style compatibility
 };
 
 module.exports = Routes;

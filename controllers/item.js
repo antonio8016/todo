@@ -4,6 +4,8 @@ var Item = require('../models/item').Item,
 
 function ItemsController () {}
 
+ItemsController.id = 'id';
+
 /*
  * GET /items
  */

@@ -60,7 +60,7 @@ describe('/items resource', function() {
             });
         });
     });
-
+    
     describe('POST /items', function() {
 
         it('should add an item', function(done) {

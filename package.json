@@ -8,11 +8,11 @@
   },
   "dependencies": {
     "express": "3.4.8",
-    "jade": "*",
+    "express-resource": "~1.0.0",
     "socket.io": "~0.9.16",
     "passport-http-bearer": "~1.0.1",
     "passport": "~0.2.0",
-    "request": "~2.33.0",
+    "request": "~2.34.0",
     "mongoose": "~3.8.6",
     "mongoose-timestamp": "~0.2.0",
     "mongoose-unique-validator": "~0.3.0",
