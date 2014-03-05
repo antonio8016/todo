@@ -26,6 +26,13 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-jshint');
 
     /**
+     * Starting the app
+     */
+    grunt.registerTask('app', function () {
+        shell.exec('nodemon app');
+    });
+
+    /**
      * <grunt report> opens the last coverage report in your browser
      */
     grunt.registerTask('report', function() {
