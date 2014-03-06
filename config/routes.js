@@ -2,7 +2,8 @@ var item = require('../controllers/item'),
     seed = require('../controllers/seed'),
     passport = require('passport'),
     BearerStrategy = require('passport-http-bearer').Strategy,
-    request = require("request");
+    request = require("request"),
+    versioning = require('../lib/versioning');
 
 function Routes () {}
 
@@ -54,6 +55,9 @@ Routes.setUp = function (app) {
     // app.all('/items*', authenticate);
     app.resource('items', item);
     app.patch('/items/:id', /* authenticate, */ item.update); // Rails 4 style compatibility
+    // versioning(app);
+    // app.vget({'pathgr':'/items', 'version':1}, item.index);
+
 };
 
 module.exports = Routes;

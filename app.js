@@ -30,12 +30,6 @@ if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
 
-// Init the server
-var server = http.createServer(app)
-server.listen(app.get('port'), function() {
-	console.log('Express server listening on port ' + app.get('port'))
-});
-
 // Setting up the databases
 databases.setUp();
 
@@ -43,7 +37,13 @@ databases.setUp();
 routes.setUp(app);
 
 // Setting up the sockets
-sockets.setUp(app, server);
+// sockets.setUp(app, server);
+
+// Init the server
+var server = http.createServer(app);
+server.listen(app.get('port'), function() {
+	console.log('Express server listening on port ' + app.get('port'))
+});
 
 // If test
 // Exporting the app and embedding the server too
