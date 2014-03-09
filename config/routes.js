@@ -8,7 +8,11 @@ var item = require('../controllers/item'),
 function Routes () {}
 
 Routes.setUp = function (app) {
+    
+    //
     // Setting up the authorization strategy
+    // 
+
     /* istanbul ignore next */
     passport.use(new BearerStrategy(
         function(token, done) {
@@ -32,31 +36,30 @@ Routes.setUp = function (app) {
             });
         }
     ));
-
-    // TODO: Seeding routes
-    // if ('test' == app.get('env') /* staging? */ ) {
-           app.head('/seeds', seed.info);
-           app.post('/seeds', seed.create);
-           app.delete('/seeds/:id', seed.destroy);
-    //    }
-
-    // Items
-    if ('development' == app.get('env')) {
-        // Set authentication
+    
+    if ('production' == app.get('env')) {
+        authenticate = passport.authenticate('bearer', { session: false });
+        app.all('/items*', authenticate);
     }
-    authenticate = passport.authenticate('bearer', { session: false });
+    
+    //
+    // Setting up the seeding routes
+    //
+    if ('test' == app.get('env') /* staging? */ ) {
+       app.head('/seeds', seed.info);
+       app.post('/seeds', seed.create);
+       app.delete('/seeds/:id', seed.destroy);
+    }
 
     //
-    // app.get({path: '/items', version: 1}, item.index)
+    // Setting up the resource routes
     //
-    // https://github.com/visionmedia/express-resource
-    // Magic for adding express methods --> https://github.com/visionmedia/express-resource/blob/master/index.js
-    //
-    // app.all('/items*', authenticate);
-    app.resource('items', item);
-    app.patch('/items/:id', /* authenticate, */ item.update); // Rails 4 style compatibility
-    // versioning(app);
-    // app.vget({'pathgr':'/items', 'version':1}, item.index);
+    app.get('/items', item.index);
+    app.get('/items/:id', item.show);
+    app.post('/items', item.create);
+    app.put('/items/:id', item.update);
+    app.patch('/items/:id', item.update);
+    app.delete('/items/:id', item.destroy);
 
 };
 

@@ -14,6 +14,8 @@ ItemsController.index = function(req, res) {
         // socket.emit('list_items', JSON.stringify(items));
         res.statusCode = HttpStatusCodes.OK;
         res.json(items);
+        console.log('here!');
+        console.log(res);
     });
 };
 

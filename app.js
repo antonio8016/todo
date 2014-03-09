@@ -4,13 +4,14 @@
  */
 
 var express = require('express.io')
-  , Resource = require('express-resource')
   , app = express()
   , http = require('http')
   , path = require('path')
   , routes = require('./config/routes')
   , sockets = require('./config/sockets')
   , databases = require('./config/databases');
+
+app.http().io()
 
 // all environments
 app.set('port', process.env.PORT || 3000);
@@ -36,14 +37,26 @@ databases.setUp();
 // Setting up the routes
 routes.setUp(app);
 
-// Setting up the sockets
-// sockets.setUp(app, server);
-
 // Init the server
 var server = http.createServer(app);
 server.listen(app.get('port'), function() {
 	console.log('Express server listening on port ' + app.get('port'))
 });
+
+// Setting up the sockets
+// This must happen after creating the server (duh!)
+sockets.setUp(app, server);
+// app.io.route('items', {
+//     create: function(req) {
+//         // create your customer
+//     },
+//     update: function(req) {
+//         // update your customer
+//     },
+//     remove: function(req) {
+//         // remove your customer
+//     },
+// });
 
 // If test
 // Exporting the app and embedding the server too
