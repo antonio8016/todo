@@ -43,7 +43,7 @@ Sockets.setUp = function (app, server) {
 
             var res = {
                 json: function(data) {
-                    socket.emit(itemIndex, data);
+                    socket.emit(itemCreate, data);
                 }
             };
 
