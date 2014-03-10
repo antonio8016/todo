@@ -2,7 +2,7 @@
 var request = require('request'),
     assert = require("assert"),
     versioning = require('../lib/versioning'),
-    express = require('express.io'),
+    express = require('express'),
     app = require('../app'),
     uuid = require('node-uuid');
 

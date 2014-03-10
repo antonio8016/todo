@@ -3,15 +3,13 @@
  * Module dependencies.
  */
 
-var express = require('express.io')
+var express = require('express')
   , app = express()
   , http = require('http')
   , path = require('path')
   , routes = require('./config/routes')
   , sockets = require('./config/sockets')
   , databases = require('./config/databases');
-
-app.http().io()
 
 // all environments
 app.set('port', process.env.PORT || 3000);
@@ -44,19 +42,7 @@ server.listen(app.get('port'), function() {
 });
 
 // Setting up the sockets
-// This must happen after creating the server (duh!)
 sockets.setUp(app, server);
-// app.io.route('items', {
-//     create: function(req) {
-//         // create your customer
-//     },
-//     update: function(req) {
-//         // update your customer
-//     },
-//     remove: function(req) {
-//         // remove your customer
-//     },
-// });
 
 // If test
 // Exporting the app and embedding the server too

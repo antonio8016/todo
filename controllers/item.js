@@ -11,11 +11,8 @@ ItemsController.id = 'id';
  */
 ItemsController.index = function(req, res) {
     Item.find(function(err, items) {
-        // socket.emit('list_items', JSON.stringify(items));
         res.statusCode = HttpStatusCodes.OK;
         res.json(items);
-        console.log('here!');
-        console.log(res);
     });
 };
 
@@ -83,13 +80,28 @@ ItemsController.destroy = function(req, res) {
 
     var id = req.params.id;
 
-    Item.remove({_id : id}, function(err, item) {
+    Item.findById(id, function(err, item) {
+
+        // Return error if we can't find the object
         if (err || !item) {
             res.statusCode = 400;
             res.json({});
-		} else {
+            return;
+        } 
+
+        // Try to remove the object
+        item.remove(function(err) {
+            
+            if (err) {
+                res.statusCode = 400;
+                res.json({});
+                return;
+            } 
+
             res.json(item);
-        }
+            
+        });
+
     });
 
 };

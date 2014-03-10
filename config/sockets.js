@@ -34,7 +34,7 @@ Sockets.setUp = function (app, server) {
         });
 
         // Create an item
-        var itemCreate = 'v1::item::create';
+        var itemCreate = 'v1::items::create';
         socket.on(itemCreate, function(data) {
 
             // Doing a fake request and response
@@ -56,42 +56,29 @@ Sockets.setUp = function (app, server) {
         //     console.log('edit_item');
         // });
 
-        // socket.on('destroy::item', function(data) {
-        //     console.log('destroy_item');
-        // });
+    
+        // Delete an item
+        var itemDestroy = 'v1::items::destroy';
+        socket.on(itemDestroy, function(data) {
+            // Doing a fake request and response
+            var req = Object.create(express.request);
+            req.params = { id: data.id };
+
+            var res = {
+                json: function(data) {
+                    socket.emit(itemDestroy, data);
+                }
+            };
+
+            // Calling the ItemController
+            ItemController.destroy(req, res);
+        });
 
         // io.sockets.on('disconnect', function (socket) {
         //     socket.emit('user disconnected');
         // });
 
-    //     app.io.route('items', {
-    //         create: function(req) {
-    //             console.log('Creating an item...');
-    //         },
-    //         update: function(req) {
-    //             console.log('Updating an item...');
-    //         },
-    //         remove: function(req) {
-    //             console.log('Removing an item...');
-    //         },
-    //     });
-
     });
-
-    // app.io.route('items', {
-    //     index: function(req) {
-    //         console.log('Returning items...');
-    //     },
-    //     create: function(req) {
-    //         // create your customer
-    //     },
-    //     update: function(req) {
-    //         // update your customer
-    //     },
-    //     remove: function(req) {
-    //         // remove your customer
-    //     },
-    // });
 
 };
 

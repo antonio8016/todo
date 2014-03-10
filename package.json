@@ -7,7 +7,7 @@
     "test": "istanbul cover _mocha -- -R spec && grunt jshint"
   },
   "dependencies": {
-    "express.io": "~1.1.13",
+    "express": "~1.1.13",
     "socket.io": "~0.9.16",
     "passport-http-bearer": "~1.0.1",
     "passport": "~0.2.0",
