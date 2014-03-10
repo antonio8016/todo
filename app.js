@@ -23,7 +23,7 @@ app.use(express.methodOverride());
 app.use(app.router);
 app.use(express.static(path.join(__dirname, 'public')));
 
-// development only
+// development only 
 /* istanbul ignore next */
 if ('development' == app.get('env')) {
   app.use(express.errorHandler());
