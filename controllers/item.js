@@ -1,14 +1,23 @@
 
 var Item = require('../models/item').Item,
-    HttpStatusCodes = require('../lib/http_status_codes'); 
+    HttpStatusCodes = require('../lib/http_status_codes'),
+    swagger = require('swagger-node-express'); 
 
 function ItemsController () {}
-
-ItemsController.id = 'id';
 
 /*
  * GET /items
  */
+ItemsController.indexSpec = {
+    "description" : "Operations about list items",
+    "path" : "/items",
+    "notes" : "Returns all pets",
+    "summary" : "Find all the pets",
+    "method": "GET",
+    "type" : "Item",
+    "nickname" : "getAllPets"
+};
+
 ItemsController.index = function(req, res) {
     Item.find(function(err, items) {
         res.statusCode = HttpStatusCodes.OK;
@@ -42,6 +51,7 @@ ItemsController.create = function(req, res) {
             res.json(err);
         } else {
             res.json(item);
+            // notifyObservers();
         }
     });
 };

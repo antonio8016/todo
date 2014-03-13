@@ -22,7 +22,8 @@
     "loggly": "~1.0.3",
     "grunt-contrib-jshint": "~0.8.0",
     "shelljs": "~0.2.6",
-    "node-uuid": "~1.4.1"
+    "node-uuid": "~1.4.1",
+    "swagger-node-express": "~2.0.1"
   },
   "engines": {
     "node": "0.11.x"

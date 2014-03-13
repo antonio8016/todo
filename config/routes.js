@@ -7,7 +7,7 @@ var item = require('../controllers/item'),
 
 function Routes () {}
 
-Routes.setUp = function (app) {
+Routes.setUp = function (app, swagger) {
     
     //
     // Setting up the authorization strategy
@@ -36,12 +36,12 @@ Routes.setUp = function (app) {
             });
         }
     ));
-    
+
     if ('production' == app.get('env')) {
         authenticate = passport.authenticate('bearer', { session: false });
         app.all('/items*', authenticate);
     }
-    
+
     //
     // Setting up the seeding routes
     //
@@ -54,12 +54,22 @@ Routes.setUp = function (app) {
     //
     // Setting up the resource routes
     //
-    app.get('/items', item.index);
+    // app.get('/items', item.index);
+    swagger.addGet({spec: item.indexSpec, action: item.index});
     app.get('/items/:id', item.show);
     app.post('/items', item.create);
     app.put('/items/:id', item.update);
     app.patch('/items/:id', item.update);
     app.delete('/items/:id', item.destroy);
+
+    // Public URL
+    var version = '0.1';
+    if ('dev' == app.get('env')) {
+        swagger.configure('http://localhost:8000', version);
+    } else {
+        swagger.configure("http://todo-rest-api.herokuapp.com", version);
+    }
+    
 
 };
 

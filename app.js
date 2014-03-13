@@ -9,7 +9,9 @@ var express = require('express')
   , path = require('path')
   , routes = require('./config/routes')
   , sockets = require('./config/sockets')
-  , databases = require('./config/databases');
+  , databases = require('./config/databases')
+  , swagger = require('swagger-node-express')
+  , models = require('./models/swagger');
 
 // all environments
 app.set('port', process.env.PORT || 3000);
@@ -23,6 +25,12 @@ app.use(express.methodOverride());
 app.use(app.router);
 app.use(express.static(path.join(__dirname, 'public')));
 
+//
+// Setting up swagger
+//
+swagger.setAppHandler(app);
+swagger.addModels(models);
+
 // development only 
 /* istanbul ignore next */
 if ('development' == app.get('env')) {
@@ -33,7 +41,7 @@ if ('development' == app.get('env')) {
 databases.setUp();
 
 // Setting up the routes
-routes.setUp(app);
+routes.setUp(app, swagger);
 
 // Init the server
 var server = http.createServer(app);
